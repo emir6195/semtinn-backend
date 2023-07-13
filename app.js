@@ -30,6 +30,7 @@ app.use('/api', require('./middleware/secure'));
 
 // routes are listed below
 app.use('/api/user', require('./routes/user'));
+app.use('/api/farmacy', require(`./routes/farmacy`));
 
 // catch api errors
 app.use('/api', require('./middleware/error'));

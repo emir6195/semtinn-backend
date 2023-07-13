@@ -24,8 +24,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// routes will be listed below
+// middlewares are listed below
+app.use('/api', require('./middleware/secure'));
+
+
+// routes are listed below
 app.use('/api/user', require('./routes/user'));
+
+// catch api errors
+app.use('/api', require('./middleware/error'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

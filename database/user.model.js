@@ -14,7 +14,6 @@ const UserSchema = new mongoose.Schema(
             district: { type: mongoose.Schema.Types.String, required: false },
         },
         behavior: {
-            eventsAttended: [{ type: mongoose.Schema.Types.ObjectId, required: false }],
             searches: [{ type: mongoose.Schema.Types.String, required: false }],
             interests: [{ type: mongoose.Schema.Types.Mixed, required: false }],
             timeSpent: { type: mongoose.Schema.Types.Number, required: false }

@@ -13,11 +13,6 @@ const UserSchema = new mongoose.Schema(
             city: { type: mongoose.Schema.Types.String, required: false },
             district: { type: mongoose.Schema.Types.String, required: false },
         },
-        demographicInfo: {
-            age: { type: mongoose.Schema.Types.Number, required: false },
-            gender: { type: mongoose.Schema.Types.String, required: false },
-            occupation: { type: mongoose.Schema.Types.String, required: false },
-        },
         behavior: {
             eventsAttended: [{ type: mongoose.Schema.Types.ObjectId, required: false }],
             searches: [{ type: mongoose.Schema.Types.String, required: false }],

@@ -22,24 +22,32 @@ class User {
     }
 
     async authenticate() {
-        let user = await userModel.findOne({ email: this.params.email }) || [];
-        let bcrypt = new Bcrypt();
-        let isAuthentiated = bcrypt.validateUser(this.params.password, user.password);
         let message;
         let success;
         let token;
-        if (isAuthentiated) {
-            let jwt = new JWT();
-            user.password = null;
-            token = jwt.createAccessToken(user);
-            success = true;
-            message = "Login successful!"
+        if (this.params.email && this.params.password) {
+            let user = await userModel.findOne({ email: this.params.email }) || [];
+            if (user?.password) {
+                let bcrypt = new Bcrypt();
+                let isAuthentiated = bcrypt.validateUser(this.params.password, user.password);
+                if (isAuthentiated) {
+                    let jwt = new JWT();
+                    user.password = null;
+                    token = jwt.createAccessToken(user);
+                    success = true;
+                    message = "Login successful!"
+                } else {
+                    token = null;
+                    success = false;
+                    message = "Username or password is wrong!"
+                }
+            } else {
+                return { token: null, success: false, message: "User not found!" }
+            }
         } else {
-            token = null;
-            success = false;
-            message = "Username or password is wrong!"
+            throw new Error("Email and password is required!");
         }
-        return {token, success, message};
+        return { token, success, message };
     }
 
     async count() {

@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const User = require('../controller/user.controller');
+const logger = require('../lib/logger');
 
 
 router.post('/', async (req, res, next) => {
@@ -22,7 +23,7 @@ router.post('/superuser', async (req, res, next) => {
             let result = await user.create();
             res.send(result);
         } else {
-            res.status(403).send({err: "You are not allowed to create superuser!"});
+            res.status(403).send({ err: "You are not allowed to create superuser!" });
         }
     } catch (error) {
         next(error);
@@ -51,10 +52,8 @@ router.delete('/', async (req, res, next) => {
 
 router.post('/login', async (req, res, next) => {
     try {
-        let token;
-        let status;
-        let message;
-        let user = new User(req.body);
+        let data = req.body;
+        let user = new User(data);
         let result = await user.authenticate();
         res.send(result);
     } catch (error) {
